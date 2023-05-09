@@ -9,6 +9,8 @@
 **
 */
 
+package com.beatofthedrum.wvdecoder.test;
+
 import com.beatofthedrum.wvdecoder.*;
 
 public class WvDemo
