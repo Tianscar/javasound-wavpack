@@ -9,7 +9,7 @@
 **
 */
 
-package com.beatofthedrum.wvdecoder;
+package com.beatofthedrum.wvcodec;
 
 class UnpackUtils
 {

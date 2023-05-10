@@ -9,10 +9,9 @@
 **
 */
 
-package com.beatofthedrum.wvdecoder;
+package com.beatofthedrum.wvcodec;
 
-class WavpackHeader
-{
+class WavpackHeader {
 
     char ckID[] = new char[4];
     long ckSize;    // was uint32_t in C

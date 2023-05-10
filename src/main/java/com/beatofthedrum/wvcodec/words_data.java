@@ -9,7 +9,7 @@
 **
 */
 
-package com.beatofthedrum.wvdecoder;
+package com.beatofthedrum.wvcodec;
 
 class words_data
 {
@@ -22,4 +22,7 @@ class words_data
     entropy_data temp_ed2 = new entropy_data();
     entropy_data c[] = {temp_ed1 , temp_ed2 };
 
+    long[][] median = new long[3][2]; // was uint32_t  in C
+    long[] slow_level = new long[2]; // was uint32_t  in C
+    long[] error_limit = new long[2]; // was uint32_t  in C
 }

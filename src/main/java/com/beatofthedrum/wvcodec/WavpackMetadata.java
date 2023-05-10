@@ -9,10 +9,9 @@
 **
 */
 
-package com.beatofthedrum.wvdecoder;
+package com.beatofthedrum.wvcodec;
 
-class WavpackMetadata
-{
+class WavpackMetadata {
     int byte_length;
     byte data[];
     short id;		// was uchar in C
@@ -21,4 +20,6 @@ class WavpackMetadata
     long bytecount = 24;// we use this to determine if we have read all the metadata 
                       	// in a block by checking bytecount again the block length
                    	// ckSize is block size minus 8. WavPack header is 32 bytes long so we start at 24
+
+    byte[] temp_data = new byte[64];
 }

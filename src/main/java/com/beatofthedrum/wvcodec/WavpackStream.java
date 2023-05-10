@@ -9,10 +9,9 @@
 **
 */
 
-package com.beatofthedrum.wvdecoder;
+package com.beatofthedrum.wvcodec;
 
-class WavpackStream
-{
+class WavpackStream {
     WavpackHeader wphdr = new WavpackHeader();
     Bitstream wvbits = new Bitstream();
 
@@ -44,4 +43,12 @@ class WavpackStream
 
     decorr_pass decorr_passes[] = { dp1, dp2, dp3, dp4, dp5, dp6, dp7, dp8, dp9, dp10, dp11, dp12, dp13, dp14, dp15, dp16 };
 
+    Bitstream wvcbits = new Bitstream();
+    delta_data dc = new delta_data();
+    byte[] blockbuff = new byte[Defines.BIT_BUFFER_SIZE + 1];
+    int blockend = Defines.BIT_BUFFER_SIZE;
+    byte[] block2buff = new byte[Defines.BIT_BUFFER_SIZE + 1];
+    int block2end = Defines.BIT_BUFFER_SIZE;
+    int bits;
+    int lossy_block;
 }

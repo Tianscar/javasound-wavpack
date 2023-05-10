@@ -9,10 +9,9 @@
 **
 */
 
-package com.beatofthedrum.wvdecoder;
+package com.beatofthedrum.wvcodec;
 
-class Bitstream
-{
+class Bitstream {
     int end, ptr;	// was uchar in c
     long file_bytes;	// was uint32_t in C
     long sr;
@@ -21,4 +20,7 @@ class Bitstream
     int bitval = 0;
     byte[] buf = new byte[Defines.BITSTREAM_BUFFER_SIZE];
     int buf_index = 0;
+
+    int start_index = 0;
+    int active = 0; // if 0 then this bitstream is not being used
 }

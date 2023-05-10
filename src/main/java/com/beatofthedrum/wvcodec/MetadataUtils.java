@@ -9,7 +9,7 @@
  **
  */
 
-package com.beatofthedrum.wvdecoder;
+package com.beatofthedrum.wvcodec;
 
 class MetadataUtils {
 	static int read_metadata_buff(WavpackContext wpc, WavpackMetadata wpmd) {

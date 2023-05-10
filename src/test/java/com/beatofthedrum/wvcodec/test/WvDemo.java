@@ -9,9 +9,9 @@
 **
 */
 
-package com.beatofthedrum.wvdecoder.test;
+package com.beatofthedrum.wvcodec.test;
 
-import com.beatofthedrum.wvdecoder.*;
+import com.beatofthedrum.wvcodec.*;
 
 public class WvDemo
 {
