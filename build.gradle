@@ -5,7 +5,7 @@ plugins {
 }
 
 ext {
-    libraryName = 'Java Implementation of WavPack Decoder'
+    libraryName = 'Java Implementation of WavPack Codec'
     libraryGroupName = 'com.tianscar.javasound'
     libraryVendorName = 'Tianscar'
 
@@ -50,7 +50,7 @@ publishing {
             from components.java
             pom {
                 name = libraryName
-                description = 'Java implementation of the tiny version of the WavPack 4.40 decoder'
+                description = 'Java implementation of the tiny version of the WavPack 4.40 decoder and encoder'
                 url = 'https://github.com/Tianscar/javasound-wavpack'
                 licenses {
                     license {
