@@ -54,7 +54,7 @@ publishing {
                 url = 'https://github.com/Tianscar/javasound-wavpack'
                 licenses {
                     license {
-                        name = 'New BSD (3-clause) License'
+                        name = 'BSD 3-Clause \"New\" or \"Revised\" License'
                         url = 'http://opensource.org/licenses/BSD-3-Clause'
                     }
                 }

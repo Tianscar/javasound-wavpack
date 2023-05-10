@@ -30,6 +30,7 @@ dependencies {
 [Tests and Examples](/src/test/java/com/beatofthedrum/wvcodec/test/)  
 [Command-line Interfaces](/src/test/java/com/beatofthedrum/wvcodec/cli/)
 
+Note you need to download test audios [here](https://github.com/Tianscar/fbodemo1) and put them to /src/test/java/resources to run the test code properly!
+
 ## License
-[BSD 3-Clause](/LICENSE)  
-[audios for test](/src/test/resources) originally created by [ProHonor](https://github.com/Aislandz), authorized [me](https://github.com/Tianscar) to use. 2023 (c) ProHonor, all rights reserved.
+[BSD 3-Clause](/LICENSE)
