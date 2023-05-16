@@ -39,7 +39,7 @@ class UnpackUtils
             if ((MetadataUtils.process_metadata(wpc, wpmd)) == Defines.FALSE)
             {
                 wpc.error = true;
-                wpc.error_message = "invalid metadata!";
+                wpc.error_message = new WavpackException("invalid metadata!");
                 return Defines.FALSE;
             }
 
@@ -49,7 +49,7 @@ class UnpackUtils
         
         if (wps.wphdr.block_samples != 0 && (null == wps.wvbits.file) ) 
         {
-            wpc.error_message = "invalid WavPack file!";
+            wpc.error_message = new WavpackException("invalid WavPack file!");
             wpc.error = true;
             return Defines.FALSE;
         }

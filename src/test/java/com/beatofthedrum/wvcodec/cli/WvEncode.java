@@ -1,7 +1,7 @@
 package com.beatofthedrum.wvcodec.cli;
 
 import com.beatofthedrum.wvcodec.Defines;
-import com.beatofthedrum.wvcodec.WavPackUtils;
+import com.beatofthedrum.wvcodec.WavpackUtils;
 import com.beatofthedrum.wvcodec.WavpackConfig;
 import com.beatofthedrum.wvcodec.WavpackContext;
 
@@ -600,7 +600,7 @@ public class WvEncode
         loc_config.num_channels = whNumChannels;
         loc_config.sample_rate = whSampleRate;
 
-        WavPackUtils.WavpackSetConfiguration(wpc, loc_config, total_samples);
+        WavpackUtils.WavpackSetConfiguration(wpc, loc_config, total_samples);
 
         // if we are creating a "correction" file, open it now for writing
         if (out2filename.length() > 0)
@@ -630,9 +630,9 @@ public class WvEncode
         }
 
         // we're now done with any WavPack blocks, so flush any remaining data
-        if ((result == Defines.NO_ERROR) && (WavPackUtils.WavpackFlushSamples(wpc) == 0))
+        if ((result == Defines.NO_ERROR) && (WavpackUtils.WavpackFlushSamples(wpc) == 0))
         {
-            System.err.println(WavPackUtils.WavpackGetErrorMessage(wpc));
+            System.err.println(WavpackUtils.WavpackGetErrorMessage(wpc));
             result = Defines.HARD_ERROR;
         }
 
@@ -640,7 +640,7 @@ public class WvEncode
         // situations we might have to back up and re-write the initial blocks.
         // Currently the only case is if we're ignoring length.
         if ((result == Defines.NO_ERROR) &&
-                (WavPackUtils.WavpackGetNumSamples(wpc) != WavPackUtils.WavpackGetSampleIndex(wpc)))
+                (WavpackUtils.WavpackGetNumSamples(wpc) != WavpackUtils.WavpackGetSampleIndex(wpc)))
         {
             System.err.println("couldn't read all samples, file may be corrupt!!");
             result = Defines.SOFT_ERROR;
@@ -680,14 +680,14 @@ public class WvEncode
         long samples_remaining;
         int bytes_per_sample;
 
-        WavPackUtils.WavpackPackInit(wpc);
+        WavpackUtils.WavpackPackInit(wpc);
 
-        bytes_per_sample = WavPackUtils.WavpackGetBytesPerSample(wpc) * WavPackUtils.WavpackGetNumChannels(wpc);
+        bytes_per_sample = WavpackUtils.WavpackGetBytesPerSample(wpc) * WavpackUtils.WavpackGetNumChannels(wpc);
 
-        samples_remaining = WavPackUtils.WavpackGetNumSamples(wpc);
+        samples_remaining = WavpackUtils.WavpackGetNumSamples(wpc);
 
         byte[] input_buffer = new byte[Defines.INPUT_SAMPLES * bytes_per_sample];
-        long[] sample_buffer = new long[(Defines.INPUT_SAMPLES * 4 * WavPackUtils.WavpackGetNumChannels(wpc))];
+        long[] sample_buffer = new long[(Defines.INPUT_SAMPLES * 4 * WavpackUtils.WavpackGetNumChannels(wpc))];
 
         int temp = 0;
 
@@ -720,13 +720,13 @@ public class WvEncode
 
             if (sample_count > 0)
             {
-                int cnt = (int) (sample_count * WavPackUtils.WavpackGetNumChannels(wpc));
+                int cnt = (int) (sample_count * WavpackUtils.WavpackGetNumChannels(wpc));
 
                 byte[] sptr = input_buffer;
                 long[] dptr = sample_buffer;
                 int loopBps = 0;
 
-                loopBps = WavPackUtils.WavpackGetBytesPerSample(wpc);
+                loopBps = WavpackUtils.WavpackGetBytesPerSample(wpc);
 
                 if (loopBps == 1)
                 {
@@ -770,17 +770,17 @@ public class WvEncode
 
             wpc.byte_idx = 0; // new WAV buffer data so reset the buffer index to zero
 
-            if (WavPackUtils.WavpackPackSamples(wpc, sample_buffer, sample_count) == 0)
+            if (WavpackUtils.WavpackPackSamples(wpc, sample_buffer, sample_count) == 0)
             {
-                System.err.println(WavPackUtils.WavpackGetErrorMessage(wpc));
+                System.err.println(WavpackUtils.WavpackGetErrorMessage(wpc));
 
                 return Defines.HARD_ERROR;
             }
         }
 
-        if (WavPackUtils.WavpackFlushSamples(wpc) == 0)
+        if (WavpackUtils.WavpackFlushSamples(wpc) == 0)
         {
-            System.err.println(WavPackUtils.WavpackGetErrorMessage(wpc));
+            System.err.println(WavpackUtils.WavpackGetErrorMessage(wpc));
 
             return Defines.HARD_ERROR;
         }

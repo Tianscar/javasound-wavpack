@@ -33,7 +33,7 @@ public class WvDemo
 
         if (args.length == 0)
         {
-            inputWVFile = "input.wv";
+            inputWVFile = "src/test/resources/fbodemo1.wv";
         }
         else
         {
@@ -44,7 +44,7 @@ public class WvDemo
         {
             fistream = new java.io.FileInputStream(inputWVFile);
             in = new java.io.DataInputStream(new java.io.BufferedInputStream(fistream));
-            wpc = WavPackUtils.WavpackOpenFileInput(in);
+            wpc = WavpackUtils.WavpackOpenFileInput(in);
         }
         catch (java.io.FileNotFoundException fe)
         {
@@ -59,15 +59,15 @@ public class WvDemo
             System.exit(1);
         }
 
-        num_channels = WavPackUtils.WavpackGetReducedChannels(wpc);
+        num_channels = WavpackUtils.WavpackGetReducedChannels(wpc);
 
         System.out.println("The wavpack file has " + num_channels + " channels");
 
-        total_samples = WavPackUtils.WavpackGetNumSamples(wpc);
+        total_samples = WavpackUtils.WavpackGetNumSamples(wpc);
 
         System.out.println("The wavpack file has " + total_samples + " samples");
 
-        bps = WavPackUtils.WavpackGetBytesPerSample(wpc);
+        bps = WavpackUtils.WavpackGetBytesPerSample(wpc);
 
         System.out.println("The wavpack file has " + bps + " bytes per sample");
 
@@ -76,7 +76,7 @@ public class WvDemo
 
             fostream = new java.io.BufferedOutputStream(new java.io.FileOutputStream("output.wav"));
             
-            WavWriter.wavwriter_writeheaders(fostream, (int)(total_samples * bps * num_channels), num_channels, (int)WavPackUtils.WavpackGetSampleRate(wpc), bps, WavPackUtils.WavpackGetBitsPerSample(wpc));
+            WavWriter.wavwriter_writeheaders(fostream, (int)(total_samples * bps * num_channels), num_channels, (int) WavpackUtils.WavpackGetSampleRate(wpc), bps, WavpackUtils.WavpackGetBitsPerSample(wpc));
             
             start = System.currentTimeMillis();
 
@@ -84,7 +84,7 @@ public class WvDemo
             {
                 long samples_unpacked; // was uint32_t in C
 
-                samples_unpacked = WavPackUtils.WavpackUnpackSamples(wpc, temp_buffer, Defines.SAMPLE_BUFFER_SIZE / num_channels);
+                samples_unpacked = WavpackUtils.WavpackUnpackSamples(wpc, temp_buffer, Defines.SAMPLE_BUFFER_SIZE / num_channels);
 
                 total_unpacked_samples += samples_unpacked;
 
@@ -116,14 +116,14 @@ public class WvDemo
             System.exit(1);
         }
 
-        if ((WavPackUtils.WavpackGetNumSamples(wpc) != -1)
-            && (total_unpacked_samples != WavPackUtils.WavpackGetNumSamples(wpc)))
+        if ((WavpackUtils.WavpackGetNumSamples(wpc) != -1)
+            && (total_unpacked_samples != WavpackUtils.WavpackGetNumSamples(wpc)))
         {
             System.err.println("Incorrect number of samples");
             System.exit(1);
         }
 
-        if (WavPackUtils.WavpackGetNumErrors(wpc) > 0)
+        if (WavpackUtils.WavpackGetNumErrors(wpc) > 0)
         {
             System.err.println("CRC errors detected");
             java.lang.System.exit(1);

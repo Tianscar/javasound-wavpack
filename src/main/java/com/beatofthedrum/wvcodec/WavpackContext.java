@@ -16,7 +16,8 @@ public class WavpackContext {
     public WavpackStream stream = new WavpackStream();
 
     public byte read_buffer[] = new byte[1024];	// was uchar in C
-    public String error_message = "";
+    //public String error_message = "";
+    public Exception error_message = null;
     public boolean error;
 
     public java.io.DataInputStream infile;
