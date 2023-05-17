@@ -17,7 +17,7 @@ public class WavpackContext {
 
     public byte read_buffer[] = new byte[1024];	// was uchar in C
     //public String error_message = "";
-    public Exception error_message = null;
+    public java.io.IOException error_message = null;
     public boolean error;
 
     public java.io.DataInputStream infile;
@@ -27,8 +27,8 @@ public class WavpackContext {
     public int lossy_blocks;
     public int status = 0;	// 0 ok, 1 error
 
-    public java.io.FileOutputStream outfile;
-    public java.io.FileOutputStream correction_outfile;
+    public java.io.OutputStream outfile;
+    public java.io.OutputStream correction_outfile;
     public int wvc_flag;
     public long block_samples;
     public long acc_samples;

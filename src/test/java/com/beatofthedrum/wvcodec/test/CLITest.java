@@ -15,7 +15,7 @@ public class CLITest {
     @Test
     @DisplayName("wav -> wavpack, with correction file")
     public void encodeWithCorrectionFile() {
-        WvEncode.main(new String[] {"-b16", "-c", "src/test/resources/fbodemo1.wav", "fbodemo1.wv", "fbodemo1.wvc"});
+        WvEncode.main(new String[] {"-b8", "-cc", "src/test/resources/fbodemo1.wav", "fbodemo1.wv", "fbodemo1.wvc"});
     }
 
 }

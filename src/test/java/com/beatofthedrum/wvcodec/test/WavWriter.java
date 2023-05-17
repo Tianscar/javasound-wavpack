@@ -8,7 +8,7 @@
 ** Distributed under the BSD Software License (see license.txt)  
 **
 */
-package com.beatofthedrum.wvcodec;
+package com.beatofthedrum.wvcodec.test;
 
 public class WavWriter
 {

@@ -10,15 +10,13 @@
 
 package com.beatofthedrum.wvcodec.test;
 
+import com.beatofthedrum.wvcodec.spi.WavpackAudioFileFormat;
 import com.beatofthedrum.wvcodec.spi.WavpackAudioFileReader;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import javax.sound.sampled.*;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -56,7 +54,7 @@ public class WavPackTest {
         line.open(pcmAis.getFormat());
         line.start();
 
-        byte[] buf = new byte[1024 * 12];
+        byte[] buf = new byte[128 * 6];
         while (true) {
             int r = pcmAis.read(buf, 0, buf.length);
             if (r < 0) {
@@ -69,6 +67,17 @@ public class WavPackTest {
         line.close();
     }
 
+    private AudioInputStream decode(AudioInputStream wavpackAis) {
+        AudioFormat inAudioFormat = wavpackAis.getFormat();
+        AudioFormat decodedAudioFormat = new AudioFormat(
+                AudioSystem.NOT_SPECIFIED,
+                inAudioFormat.getSampleSizeInBits(),
+                inAudioFormat.getChannels(),
+                true,
+                inAudioFormat.isBigEndian());
+        return AudioSystem.getAudioInputStream(decodedAudioFormat, wavpackAis);
+    }
+
     @Test
     @DisplayName("wavpack -> pcm, play via SPI")
     public void convertWavPackToPCMAndPlay() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -78,14 +87,29 @@ public class WavPackTest {
         System.out.println("in stream: " + wavpackAis);
         AudioFormat inAudioFormat = wavpackAis.getFormat();
         System.out.println("in audio format: " + inAudioFormat);
+
+        AudioFormat decodedAudioFormat = new AudioFormat(
+                AudioSystem.NOT_SPECIFIED,
+                inAudioFormat.getSampleSizeInBits(),
+                inAudioFormat.getChannels(),
+                true,
+                inAudioFormat.isBigEndian());
+
+        assertTrue(AudioSystem.isConversionSupported(decodedAudioFormat, inAudioFormat));
+
+        wavpackAis = AudioSystem.getAudioInputStream(decodedAudioFormat, wavpackAis);
+        decodedAudioFormat = wavpackAis.getFormat();
+        System.out.println("decoded in stream: " + wavpackAis);
+        System.out.println("decoded audio format: " + decodedAudioFormat);
+
         AudioFormat outAudioFormat = new AudioFormat(
-            inAudioFormat.getSampleRate(),
+            decodedAudioFormat.getSampleRate(),
             16,
-            inAudioFormat.getChannels(),
+            decodedAudioFormat.getChannels(),
             true,
             false);
 
-        assertTrue(AudioSystem.isConversionSupported(outAudioFormat, inAudioFormat));
+        assertTrue(AudioSystem.isConversionSupported(outAudioFormat, decodedAudioFormat));
 
         AudioInputStream pcmAis = AudioSystem.getAudioInputStream(outAudioFormat, wavpackAis);
         System.out.println("out stream: " + pcmAis);
@@ -99,7 +123,7 @@ public class WavPackTest {
     @DisplayName("play WavPack from InputStream via SPI")
     public void playWavPackInputStream() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         InputStream stream = Thread.currentThread().getContextClassLoader().getResourceAsStream("fbodemo1.wv");
-        AudioInputStream wavpackAis = AudioSystem.getAudioInputStream(stream);
+        AudioInputStream wavpackAis = decode(AudioSystem.getAudioInputStream(stream));
         play(wavpackAis);
         wavpackAis.close();
     }
@@ -108,9 +132,19 @@ public class WavPackTest {
     @DisplayName("play WavPack from URL via SPI")
     public void playWavPackURL() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
         URL url = new URL("https://github.com/Tianscar/fbodemo1/raw/main/fbodemo1.wv");
-        AudioInputStream wavpackAis = AudioSystem.getAudioInputStream(url);
+        AudioInputStream wavpackAis = decode(AudioSystem.getAudioInputStream(url));
         play(wavpackAis);
         wavpackAis.close();
+    }
+
+    @Test
+    @DisplayName("pcm -> wavpack via SPI")
+    public void encodeWavPackFile() throws UnsupportedAudioFileException, IOException {
+        AudioInputStream pcmAis = AudioSystem.getAudioInputStream(new File("src/test/resources/fbodemo1.wav"));
+        File outFile = new File("fbodemo1.wv");
+        if (!outFile.exists()) assertTrue(outFile.createNewFile());
+        AudioSystem.write(pcmAis, WavpackAudioFileFormat.Type.WAVPACK, outFile);
+        pcmAis.close();
     }
 
     @Test
