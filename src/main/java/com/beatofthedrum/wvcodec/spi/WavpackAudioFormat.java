@@ -35,7 +35,6 @@ public class WavpackAudioFormat extends AudioFormat {
 
     private static Map<String, Object> generateProperties(WavpackContext wpc) {
         Map<String, Object> properties = new HashMap<>();
-        properties.put("vbr", true);
         properties.put("bitrate", WavpackUtils.WavpackGetBitsPerSample(wpc) * WavpackUtils.WavpackGetSampleRate(wpc));
         return properties;
     }
