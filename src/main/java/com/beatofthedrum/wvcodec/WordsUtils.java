@@ -316,8 +316,7 @@ class WordsUtils
     // of WORD_EOF indicates that the end of the bitstream was reached (all 1s) or
     // some other error occurred.
 
-    static int get_words(long nsamples, long flags, words_data w, Bitstream bs, int [] buffer, int bufferStartPos)
-    {
+    static int get_words(long nsamples, long flags, words_data w, Bitstream bs, int [] buffer, int bufferStartPos) throws java.io.IOException {
         entropy_data [] c = w.c;
         int csamples;
         int buffer_counter = bufferStartPos;
@@ -647,8 +646,7 @@ class WordsUtils
     // minimum number of bits and then determines whether another bit is needed
     // to define the code.
 
-    static long read_code(Bitstream bs, long maxcode)
-    {
+    static long read_code(Bitstream bs, long maxcode) throws java.io.IOException {
         int bitcount = count_bits(maxcode);
         long extras = (1L << bitcount) - maxcode - 1, code;
 

@@ -40,8 +40,8 @@ public class WavpackAudioFileReader extends AudioFileReader {
     public AudioFileFormat getAudioFileFormat(URL url) throws UnsupportedAudioFileException, IOException {
         URLConnection connection = url.openConnection();
         WavpackContext wpc = WavpackUtils.WavpackOpenFileInput(new DataInputStream(connection.getInputStream()));
-        throwExceptions(wpc);
         try {
+            throwExceptions(wpc);
             return new WavpackAudioFileFormat(wpc, connection.getContentLengthLong());
         }
         finally {
@@ -52,8 +52,8 @@ public class WavpackAudioFileReader extends AudioFileReader {
     @Override
     public AudioFileFormat getAudioFileFormat(File file) throws UnsupportedAudioFileException, IOException {
         WavpackContext wpc = WavpackUtils.WavpackOpenFileInput(new DataInputStream(Files.newInputStream(file.toPath(), READ)));
-        throwExceptions(wpc);
         try {
+            throwExceptions(wpc);
             return new WavpackAudioFileFormat(wpc, file.length());
         }
         finally {

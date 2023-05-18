@@ -424,8 +424,7 @@ class UnpackUtils
     // samples unpacked, which can be less than the number requested if an error
     // occurs or the end of the block is reached.
 
-    static long unpack_samples(WavpackContext wpc, int [] buffer, long sample_count, int bufferStartPos)
-    {
+    static long unpack_samples(WavpackContext wpc, int [] buffer, long sample_count, int bufferStartPos) throws java.io.IOException {
         WavpackStream wps = wpc.stream;
         long flags = wps.wphdr.flags;
         long i;

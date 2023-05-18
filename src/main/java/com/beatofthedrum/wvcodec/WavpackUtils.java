@@ -265,7 +265,14 @@ public class WavpackUtils
             if (samples_to_unpack > samples)
                 samples_to_unpack = samples;
 
-            UnpackUtils.unpack_samples(wpc, buffer, samples_to_unpack, buf_idx);
+            try {
+                UnpackUtils.unpack_samples(wpc, buffer, samples_to_unpack, buf_idx);
+            }
+            catch (java.io.IOException e) {
+                wpc.error = true;
+                wpc.error_message = e;
+                return samples_unpacked;
+            }
 
             if (wpc.reduced_channels > 0)
                 bytes_returned = (int) (samples_to_unpack * wpc.reduced_channels);

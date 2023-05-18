@@ -13,8 +13,7 @@ package com.beatofthedrum.wvcodec;
 
 class BitsUtils
 {
-    static void getbit(Bitstream bs)
-    {
+    static void getbit(Bitstream bs) throws java.io.IOException {
         if (bs.bc > 0)
         {
             bs.bc--;
@@ -37,8 +36,7 @@ class BitsUtils
         bs.sr = bs.sr >> 1;
     }
 
-    static long getbits(int nbits, Bitstream bs)
-    {
+    static long getbits(int nbits, Bitstream bs) throws java.io.IOException {
         int uns_buf;
         final long value;
 
@@ -103,8 +101,7 @@ class BitsUtils
         return bs;
     }
 
-    static void bs_read(Bitstream bs)
-    {
+    static void bs_read(Bitstream bs) throws java.io.IOException {
         if (bs.file_bytes > 0)
         {
             long bytes_read, bytes_to_read;
@@ -114,16 +111,8 @@ class BitsUtils
             if (bytes_to_read > bs.file_bytes)
                 bytes_to_read = bs.file_bytes;
 
-            try
-            {
-                bytes_read = bs.file.read(bs.buf, 0, (int) bytes_to_read);
-                bs.buf_index = 0;
-            }
-            catch (Exception e)
-            {
-                System.err.println("Big error while reading file: " + e);
-                bytes_read = 0;
-            }
+            bytes_read = bs.file.read(bs.buf, 0, (int) bytes_to_read);
+            bs.buf_index = 0;
 
             if (bytes_read > 0)
             {
