@@ -56,7 +56,7 @@ public class WavpackUtils
 
             try
             {
-                wps.wphdr = read_next_header(wpc.infile, wps.wphdr);
+                wps.wphdr = read_next_header(wpc.infile, wps.wphdr, true);
             } catch (java.io.IOException e)
             {
                 wpc.error = true;
@@ -208,7 +208,7 @@ public class WavpackUtils
 
                 try
                 {
-                    wps.wphdr = read_next_header(wpc.infile, wps.wphdr);
+                    wps.wphdr = read_next_header(wpc.infile, wps.wphdr, false);
                 }
                 catch (java.io.IOException e)
                 {
@@ -452,9 +452,9 @@ public class WavpackUtils
 
     // Read from current file position until a valid 32-byte WavPack 4.0 header is
     // found and read into the specified pointer. If no WavPack header is found within 1 meg,
-    // then an error is returned. No additional bytes are read past the header. 
+    // then an error is returned. No additional bytes are read past the header.
 
-    static WavpackHeader read_next_header(java.io.DataInputStream infile, WavpackHeader wphdr) throws java.io.IOException
+    static WavpackHeader read_next_header(java.io.DataInputStream infile, WavpackHeader wphdr, boolean first) throws java.io.IOException
     {
         long bytes_skipped = 0;
         int bleft = 0; // bytes left in buffer
@@ -560,6 +560,8 @@ public class WavpackUtils
                 wphdr.status = 1;
                 return wphdr;
             }
+
+            if (first) throw new WavpackException("not a WavPack file");
         }
     }
 
