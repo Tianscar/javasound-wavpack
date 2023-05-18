@@ -22,7 +22,7 @@ repositories {
 ```groovy
 dependencies {
     ...
-    implementation 'com.tianscar.javasound:javasound-wavpack:0.4.5'
+    implementation 'com.tianscar.javasound:javasound-wavpack:1.4.1'
 }
 ```
 

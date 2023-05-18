@@ -26,7 +26,7 @@ public class WavpackAudioFileReader extends AudioFileReader {
         final WavpackContext wpc;
         if (stream instanceof java.io.DataInputStream) wpc = WavpackUtils.WavpackOpenFileInput((java.io.DataInputStream) stream);
         else {
-            stream.mark(1000);
+            stream.mark(1048576);
             wpc = WavpackUtils.WavpackOpenFileInput(new DataInputStream(stream));
         }
         if (wpc.error) {
@@ -68,7 +68,7 @@ public class WavpackAudioFileReader extends AudioFileReader {
             throwExceptions(wpc);
             return new WavpackAudioInputStream(wpc, NOT_SPECIFIED);
         }
-        stream.mark(1000);
+        stream.mark(1048576);
         try {
             WavpackContext wpc = WavpackUtils.WavpackOpenFileInput(new DataInputStream(stream));
             throwExceptions(wpc);
