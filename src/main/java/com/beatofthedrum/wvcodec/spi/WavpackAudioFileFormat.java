@@ -26,11 +26,15 @@ public class WavpackAudioFileFormat extends AudioFileFormat {
     public WavpackAudioFileFormat(WavpackContext wpc, long byteLength) {
         super(WAVPACK, (int) byteLength, new WavpackAudioFormat(wpc), (int) WavpackUtils.WavpackGetNumSamples(wpc));
 
+        final boolean lossless = wpc.lossy_blocks == Defines.FALSE;
+        final boolean hybrid = (wpc.config.flags & Defines.CONFIG_HYBRID_FLAG) != 0;
+
         props = new HashMap<>();
-        props.put("duration", (long) (((double) WavpackUtils.WavpackGetNumSamples(wpc) / (double) WavpackUtils.WavpackGetSampleRate(wpc)) * 1_000_000L));
         props.put("wv.channels", WavpackUtils.WavpackGetNumChannels(wpc));
-        props.put("wv.lossless", wpc.lossy_blocks == Defines.FALSE);
-        props.put("wv.hybrid", (wpc.config.flags & Defines.CONFIG_HYBRID_FLAG) != 0);
+        props.put("wv.lossless", lossless);
+        props.put("wv.hybrid", hybrid);
+        if (hybrid || !lossless)
+            props.put("duration", (long) (((double) WavpackUtils.WavpackGetNumSamples(wpc) / (double) WavpackUtils.WavpackGetSampleRate(wpc)) * 1_000_000L));
     }
 
     /**
