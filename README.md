@@ -1,3 +1,5 @@
+WARNING: THIS PROJECT IS NO LONGER MAINTAINED. MOVED TO: https://github.com/jseproject/jse-spi
+
 # Java Implementation of WavPack Codec
 
 This is a fork of [Java-WavPack-Decoder](https://github.com/soiaf/Java-WavPack-Decoder) and [Java-WavPack-Encoder](https://www.wavpack.com/files/JavaWavPackEncoder_v1.1.zip), with JavaSound SPI support.
